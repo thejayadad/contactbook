@@ -1,7 +1,5 @@
 import ContactForm from '@/components/contact-form'
 import ContactList from '@/components/contact-list'
-import Contacttable from '@/components/contact-table'
-import Favorites from '@/components/favorites'
 import SearchBar from '@/components/search'
 import React from 'react'
 

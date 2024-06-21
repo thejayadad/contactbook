@@ -2,9 +2,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from "@nextui-org/react";
 import { getContacts } from '@/lib/actions/get-contact';
-import UpdateContact from './update-contact';
-import DeleteContact from './delete-contact';
-import {Popover, PopoverTrigger, PopoverContent, Button, Input} from "@nextui-org/react";
 import ActionItems from './action-items';
 
 
