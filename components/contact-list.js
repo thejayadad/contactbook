@@ -1,8 +1,12 @@
 'use client'
-// components/ContactList.js
-import React, { useEffect, useState } from 'react';
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from '@nextui-org/table';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from "@nextui-org/react";
 import { getContacts } from '@/lib/actions/get-contact';
+import UpdateContact from './update-contact';
+import DeleteContact from './delete-contact';
+import {Popover, PopoverTrigger, PopoverContent, Button, Input} from "@nextui-org/react";
+import ActionItems from './action-items';
+
 
 const ContactList = ({ query }) => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -10,6 +14,8 @@ const ContactList = ({ query }) => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 4;
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -43,22 +49,25 @@ const ContactList = ({ query }) => {
     setFilteredContacts(filtered);
   }, [contacts, selectedLetter, query]);
 
-  const toggleFavorite = (contactId) => {
-    if (favorites.includes(contactId)) {
-      setFavorites(favorites.filter(id => id !== contactId));
-    } else {
-      setFavorites([...favorites, contactId]);
-    }
-  };
 
   const handleLetterClick = async (letter) => {
     setSelectedLetter(letter);
+    setPage(1); // Reset page when selecting a new letter
   };
 
   const clearFilter = () => {
     setSelectedLetter('');
     setFilteredContacts(contacts); // Reset filtered contacts to all contacts
+    setPage(1); // Reset page when clearing filter
   };
+
+  const pages = Math.ceil(filteredContacts.length / rowsPerPage);
+  const items = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return filteredContacts.slice(start, end);
+  }, [page, filteredContacts]);
 
   return (
     <div>
@@ -92,21 +101,34 @@ const ContactList = ({ query }) => {
           <TableColumn>PHONE</TableColumn>
           <TableColumn>ACTION</TableColumn>
         </TableHeader>
-        <TableBody emptyContent="Loading Contacts One Second">
-          {filteredContacts.map((contact) => (
+        <TableBody emptyContent="No contacts to display.">
+          {items.map((contact) => (
             <TableRow key={contact.id}>
-              <TableCell>{contact.name}</TableCell>
+              <TableCell>
+                <p className='text-sm font-light tracking-tighter'>{contact.name}</p>
+              </TableCell>
               <TableCell>{contact.email}</TableCell>
               <TableCell>{contact.phone}</TableCell>
               <TableCell>
-                <button onClick={() => toggleFavorite(contact.id)}>
-                  {favorites.includes(contact.id) ? 'Remove from Favorites' : 'Add to Favorites'}
-                </button>
+               <div className='flex justify-center items-center'>
+                  <ActionItems contact={contact} />
+               </div>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="secondary"
+          page={page}
+          total={pages}
+          onChange={(page) => setPage(page)}
+        />
+      </div>
     </div>
   );
 };

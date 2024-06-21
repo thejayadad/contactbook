@@ -16,7 +16,7 @@ const HomePage = async ({searchParams}) => {
         <div className='grid grid-cols-1 md:grid-cols-8 gap-4'>
           <div className='col-span-1 md:col-span-2 p-4 border-r'>
             <div className='flex flex-col gap-2'>
-            <p className='tracking-widest text-xs title-font font-medium text-indigo-500'>Add Contact</p>
+            <p className='tracking-widest text-xs title-font font-medium text-secondary'>Add Contact</p>
             <ContactForm />
             </div>
           </div>
