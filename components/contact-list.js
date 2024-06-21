@@ -71,7 +71,9 @@ const ContactList = ({ query }) => {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-2 mx-auto max-w-screen-md mb-8">
+      <h2 className='title-font text-lg font-medium text-gray-900'>Filter</h2>
+        <p className='tracking-widest text-xs title-font font-medium text-secondary mb-1'>Filter By The First Character</p>
+        <div className="flex flex-wrap justify-center gap-2 mx-auto max-w-screen-md mb-8">
         {alphabet.map((letter) => (
           <button
             key={letter}
@@ -94,7 +96,7 @@ const ContactList = ({ query }) => {
           Clear
         </button>
       </div>
-      <Table aria-label="Contact List Table">
+      <Table isStriped aria-label="Contact List Table">
         <TableHeader>
           <TableColumn>NAME</TableColumn>
           <TableColumn>EMAIL</TableColumn>
@@ -103,12 +105,20 @@ const ContactList = ({ query }) => {
         </TableHeader>
         <TableBody emptyContent="No contacts to display.">
           {items.map((contact) => (
-            <TableRow key={contact.id}>
+            <TableRow  key={contact.id}>
               <TableCell>
-                <p className='text-sm font-light tracking-tighter'>{contact.name}</p>
+                <p className=' title-font tracking-wider font-medium text-gray-900 text-sm dark:text-white'>{contact.name}</p>
               </TableCell>
-              <TableCell>{contact.email}</TableCell>
-              <TableCell>{contact.phone}</TableCell>
+              <TableCell>
+                <p className=' title-font tracking-wider font-medium text-gray-900 text-sm dark:text-white'>
+                {contact.email}
+                </p>
+              </TableCell>
+              <TableCell>
+              <p className=' title-font tracking-wider font-medium text-gray-900 text-sm dark:text-white'>
+              {contact.phone}
+                </p>
+              </TableCell>
               <TableCell>
                <div className='flex justify-center items-center'>
                   <ActionItems contact={contact} />

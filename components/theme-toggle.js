@@ -19,7 +19,7 @@ const ThemeToogle = () => {
     <div>
         <Switch
         defaultSelected={resolvedTheme === 'dark'}
-        size='lg'
+        size='md'
         onChange={handleToggle}
         startContent={<FiSun />}
         endContent={<FiMoon />}
