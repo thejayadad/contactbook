@@ -1,0 +1,22 @@
+// This is your Prisma schema file for MongoDB
+
+// Generator configuration
+generator client {
+  provider = "prisma-client-js"
+}
+
+// MongoDB datasource configuration
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL") // MongoDB connection URL
+}
+
+// Model definition
+model Contact {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  email      String
+  phone      String
+  createdAt  DateTime  @default(now()) // Automatically set to current timestamp on creation
+  updatedAt  DateTime  @updatedAt   // Automatically updated to current timestamp on updates
+}
